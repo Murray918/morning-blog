@@ -25,6 +25,14 @@ export default class Main extends Component {
 		})
 	}
 
+	handleDeletePost = postIdx => {
+		// We cannot mutate state directly
+		const newStateArray = this.state.posts
+		.filter((elem, idx) => idx !== postIdx);
+
+		this.setState({ posts: newStateArray });
+	}
+
 	render() {
 		/**
 		 * *TODO: set the key so react can track list
@@ -35,6 +43,7 @@ export default class Main extends Component {
 					<h3>{post.title}</h3>
 					<h5>{post.author}</h5>
 					<h6>{post.post}</h6>
+					<button onClick={() => this.handleDeletePost(index)}>Delete</button>
 				</li>
 			)
 		})
