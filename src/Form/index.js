@@ -16,7 +16,12 @@ export default class Form extends Component {
     handleSubmit = event => {
         console.log(' form index.js line 18 this event fired')
         event.preventDefault()
-        this.props.handleAddPost(this.state)
+		this.props.handleAddPost(this.state)
+		this.setState({
+			title: '',
+			author: '',
+			post: ''
+		});
     } 
 
 	render() {
@@ -25,29 +30,34 @@ export default class Form extends Component {
 		 */
 		return (
 			<form onSubmit={this.handleSubmit}>
-				<div>
+				<div className="row">
+					<div className="six columns">
 					<label>Title</label>
 					<input
+						className="u-full-width"
 						onChange={this.handleChange}
 						name="title"
 						value={this.state.title}
 					/>
+					</div>
+					<div className="six columns">
+					<label>Author</label>
+					<input
+						className="u-full-width"
+						onChange={this.handleChange}
+						name="author"
+						value={this.state.author}
+					/>
+					</div>
 				</div>
-				<div />
-                    <label>Author</label>
-                    <input
-                        onChange={this.handleChange}
-                        name="author"
-                        value={this.state.author}
-                    />
-				<div />
                 <div>
                     <label>Post</label>
-                    <input
+                    <textarea
+						className="u-full-width"
                         onChange={this.handleChange}
                         name="post"
                         value={this.state.post}
-                    />
+                    ></textarea>
                 </div>
 				<input type="submit"  />
 			</form>
