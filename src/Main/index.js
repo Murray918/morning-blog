@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Form from '../Form'
+import BlogPost from '../BlogPost'
 
 export default class Main extends Component {
 	state = {
@@ -27,24 +28,26 @@ export default class Main extends Component {
 
 	handleDeletePost = postIdx => {
 		// We cannot mutate state directly
-		const newStateArray = this.state.posts
-		.filter((elem, idx) => idx !== postIdx);
+		const newStateArray = this.state.posts.filter(
+			(elem, idx) => idx !== postIdx
+		)
 
-		this.setState({ posts: newStateArray });
+		this.setState({ posts: newStateArray })
 	}
 
 	render() {
 		/**
-		 * *TODO: set the key so react can track list
+		 * *TODO: extract this as a component to another file
 		 */
+
 		const postsList = this.state.posts.map((post, index) => {
 			return (
-				<li key={index}>
-					<h3>{post.title}</h3>
-					<h5>{post.author}</h5>
-					<h6>{post.post}</h6>
-					<button onClick={() => this.handleDeletePost(index)}>Delete</button>
-				</li>
+				<BlogPost
+					key={index}
+					{...post}
+					handleDeletePost={this.handleDeletePost}
+					index={index}
+				/>
 			)
 		})
 
