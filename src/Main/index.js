@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Form from '../Form'
 import BlogPost from '../BlogPost'
+import Button from '../Button'
 
 export default class Main extends Component {
 	state = {
-		isPosting: true,
+		isPosting: false,
 		posts: [
 			{
 				title: 'My Day',
@@ -14,7 +15,7 @@ export default class Main extends Component {
 			}
 		]
 	}
-	handleClick = event => {
+	 handleClick = (event) => {
 		this.setState({
 			isPosting: !this.state.isPosting
 		})
@@ -57,7 +58,7 @@ export default class Main extends Component {
 					<h1>Party Blog</h1>
 				</header>
 				<section>
-					<button onClick={this.handleClick}>toggle</button>
+					<Button handleClick={this.handleClick} type={"Add New Post"}/>
 					{!!this.state.isPosting ? (
 						<Form handleAddPost={this.handleAddPost} />
 					) : null}
