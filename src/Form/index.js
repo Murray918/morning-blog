@@ -64,3 +64,7 @@ export default class Form extends Component {
 		)
 	}
 }
+
+Form.propTypes = {
+	handleAddPost : PropType.func
+}

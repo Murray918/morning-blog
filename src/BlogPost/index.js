@@ -18,3 +18,11 @@ function BlogPost ({title, author, post, index, handleDeletePost}) {
 
 export default BlogPost;
 
+BlogPost.propTypes = {
+    title : PropTypes.string,
+    author : PropType.string,
+    post : PropTypes.string,
+    index : PropTypes.number,
+    handleDeletePost : PropTyopes.number
+}
+

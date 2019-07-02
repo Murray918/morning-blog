@@ -13,5 +13,8 @@ export default Button
 
 
 Button.propTypes = {
-    
+	type : PropTypes.string,
+	index : PropTypes.number,
+	handleClick : PropTypes.func,
+	handleDeletePost : PropTypes.func
 }
