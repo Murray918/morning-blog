@@ -4,11 +4,16 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import './App.css';
 import Main from './Main'
 import Login from './Login'
+import ProtectedRoute from './Login/ProtectedRoute'
 
 
 export default class App extends Component {
   state = {
     isLoggedIn : false
+  }
+
+  handleLogin = () => {
+    this.setState({ isLoggedIn: true })
   }
 
   render(){
@@ -17,7 +22,10 @@ export default class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route path="/main" component={Main} />
+            <ProtectedRoute 
+            path="/main" 
+            isLoggedIn={this.state.isLoggedIn} 
+            component={Main} />
           </Switch>
         </Router>
       </div>
