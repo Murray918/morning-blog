@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export default class Form extends Component {
 
@@ -66,5 +67,5 @@ export default class Form extends Component {
 }
 
 Form.propTypes = {
-	handleAddPost : PropType.func
+	handleAddPost : PropTypes.func
 }
