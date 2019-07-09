@@ -7,6 +7,7 @@ export default class Form extends Component {
 		author: '',
 		post: ''
 	}
+	
 	handleChange = event => {
         this.setState({
             [event.currentTarget.name]: event.currentTarget.value

@@ -6,24 +6,50 @@ import Button from '../Button'
 export default class Main extends Component {
 	state = {
 		isPosting: false,
-		posts: [
-			{
-				title: 'My Day',
-				author: 'Andrew',
-				post:
-					'Ipsum reprehenderit id aliqua in deserunt. Esse sunt veniam culpa excepteur ex aliqua adipisicing irure occaecat enim ad consequat ullamco. Officia qui duis esse nisi cillum duis dolore et irure qui commodo quis. Incididunt eiusmod do fugiat voluptate voluptate eu proident consectetur aliquip reprehenderit sunt aliquip. Lorem occaecat velit velit quis ullamco culpa sunt anim enim reprehenderit enim exercitation sit qui. Ut sit voluptate eiusmod pariatur.'
-			}
-		]
+		posts: []
 	}
-	 handleClick = (event) => {
+	//this is our did mount for data fetching
+	componentDidMount() {
+		console.log(this.state)
+		console.log('this is in the component did mount')
+		console.log(this.state)
+		getPosts().then(results =>
+			this.setState({
+				posts: results
+			})
+		)
+	}
+
+	handleClick = event => {
 		this.setState({
 			isPosting: !this.state.isPosting
 		})
 	}
 
 	handleAddPost = ({ title, author, post }) => {
-		this.setState({
-			posts: [{ title, author, post }, ...this.state.posts]
+		const options = {
+			method: 'POST',
+			headers: {
+				'content-type': 'application-json'
+			},
+			body: JSON.stringify({ title, author, post })
+		}
+		console.log(options)
+		async function createPost() {
+			try {
+				const sendPost = await fetch('http://localhost:8000/api/post', options)
+				const postResult = await sendPost.json()
+				return await postResult
+			} catch (error) {
+				console.log('line 39', error)
+			}
+		}
+
+		createPost().then(result => {
+			console.log(result)
+			this.setState({
+				posts: [{ ...result }, ...this.state.posts]
+			})
 		})
 	}
 
@@ -58,7 +84,7 @@ export default class Main extends Component {
 					<h1>Party Blog</h1>
 				</header>
 				<section>
-					<Button handleClick={this.handleClick} type={"Add New Post"}/>
+					<Button handleClick={this.handleClick} type={'Add New Post'} />
 					{!!this.state.isPosting ? (
 						<Form handleAddPost={this.handleAddPost} />
 					) : null}
@@ -66,5 +92,17 @@ export default class Main extends Component {
 				</section>
 			</div>
 		)
+	}
+}
+
+// TODO extract this to a utils file
+// this is the magic fetching function that gets our data from the API
+async function getPosts() {
+	try {
+		const fetchPosts = await fetch('http://localhost:8000/api/posts')
+		const data = fetchPosts.json()
+		return await data
+	} catch (error) {
+		console.log(error)
 	}
 }
