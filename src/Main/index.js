@@ -73,7 +73,7 @@ export default class Main extends Component {
 					key={index}
 					{...post}
 					handleDeletePost={this.handleDeletePost}
-					index={index}
+					index={'party'}
 				/>
 			)
 		})

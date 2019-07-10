@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '../Button';
+import PropTypes from 'prop-types';
 
 function BlogPost ({title, author, post, index, handleDeletePost}) {
     return (
@@ -17,4 +18,12 @@ function BlogPost ({title, author, post, index, handleDeletePost}) {
 }
 
 export default BlogPost;
+
+BlogPost.propTypes = {
+    title : PropTypes.string,
+    author : PropTypes.string,
+    post : PropTypes.string,
+    index : PropTypes.number,
+    handleDeletePost : PropTypes.func
+}
 
