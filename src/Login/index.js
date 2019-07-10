@@ -14,6 +14,8 @@ function Login({ handleLogin, isLoggedIn, type, location }) {
 	)
 }
 
+export default Login
+
 Login.propTypes = {
 	type: PropTypes.string,
     handleLogin: PropTypes.func,
@@ -21,4 +23,3 @@ Login.propTypes = {
     location : PropTypes.string
 }
 
-export default Login
