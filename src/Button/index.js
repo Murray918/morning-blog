@@ -11,7 +11,7 @@ function Button({ handleClick, handleDeletePost, index, type }) {
 
 export default Button
 
-
+// ? why is this a great practice
 Button.propTypes = {
 	type : PropTypes.string,
 	index : PropTypes.number,

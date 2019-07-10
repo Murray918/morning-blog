@@ -4,15 +4,13 @@ import BlogPost from '../BlogPost'
 import Button from '../Button'
 
 export default class Main extends Component {
+	// ? what will happen if we set our initial state.posts as null 
 	state = {
 		isPosting: false,
 		posts: []
 	}
-	//this is our did mount for data fetching
+	// ? when does this method get called
 	componentDidMount() {
-		console.log(this.state)
-		console.log('this is in the component did mount')
-		console.log(this.state)
 		getPosts().then(results =>
 			this.setState({
 				posts: results
@@ -26,11 +24,13 @@ export default class Main extends Component {
 		})
 	}
 
+	// TODO: this whole (lines 24/51) function needs to be refactored. the create post needs to either have the options declared inside of it or more preferably take the options object as an argument. It also needs to take title, author and post. 
 	handleAddPost = ({ title, author, post }) => {
+		//this line was the culprit of errors we had a '-' instead of a '/' in application/json on line 34
 		const options = {
 			method: 'POST',
 			headers: {
-				'content-type': 'application-json'
+ 				'content-type': 'application/json'
 			},
 			body: JSON.stringify({ title, author, post })
 		}
@@ -64,7 +64,7 @@ export default class Main extends Component {
 
 	render() {
 		/**
-		 * *TODO: extract this as a component to another file
+	    	* *TODO: extract this as a component to another file
 		 */
 
 		const postsList = this.state.posts.map((post, index) => {
@@ -95,7 +95,7 @@ export default class Main extends Component {
 	}
 }
 
-// TODO extract this to a utils file
+// TODO extract lines 98/116 to a utils/services file
 // this is the magic fetching function that gets our data from the API
 async function getPosts() {
 	try {
