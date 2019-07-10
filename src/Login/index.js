@@ -1,21 +1,24 @@
 import React from 'react'
 import Button from '../Button'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
 
-function Login({handleLogin, type}) {
-    return (
-    <div>
-        <h3>Login</h3>
-        <Button handleLogin={handleLogin} type={type} />
-    </div>
-    )
+function Login({ handleLogin, isLoggedIn, type, location }) {
+	return !!isLoggedIn ? (
+		<Redirect to={{ pathname: '/main', state: { from: location } }} />
+	) : (
+		<div>
+			<h3>Please Login To View our Blog</h3>
+			<Button handleLogin={handleLogin} type={type} />
+		</div>
+	)
 }
 
-
-
 Login.propTypes = {
-    type: PropTypes.string,
-    handleLogin: PropTypes.func
+	type: PropTypes.string,
+    handleLogin: PropTypes.func,
+    isLoggedIn : PropTypes.bool,
+    location : PropTypes.string
 }
 
 export default Login
