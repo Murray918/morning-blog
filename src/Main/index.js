@@ -48,7 +48,8 @@ export default class Main extends Component {
 		createPost().then(result => {
 			console.log(result)
 			this.setState({
-				posts: [{ ...result }, ...this.state.posts]
+				posts: [{ ...result }, ...this.state.posts],
+				isPosting : false
 			})
 		})
 	}
