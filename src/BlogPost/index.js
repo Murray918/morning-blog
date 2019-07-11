@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../Button';
 import PropTypes from 'prop-types';
 
-function BlogPost ({title, author, post, index, handleDeletePost}) {
+function BlogPost ({title, author, post, postId, handleDeletePost}) {
     return (
         <li>
             <h3>{title}</h3>
@@ -10,7 +10,7 @@ function BlogPost ({title, author, post, index, handleDeletePost}) {
             <h6>{post}</h6>
             <Button
             type={"Delete"} 
-            index={index} 
+            postId={postId} 
             handleDeletePost={handleDeletePost}
             />
         </li>
@@ -23,7 +23,7 @@ BlogPost.propTypes = {
     title : PropTypes.string,
     author : PropTypes.string,
     post : PropTypes.string,
-    index : PropTypes.number,
+    postId : PropTypes.string,
     handleDeletePost : PropTypes.func
 }
 

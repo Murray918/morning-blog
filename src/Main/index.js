@@ -15,7 +15,7 @@ export default class Main extends Component {
 			this.setState({
 				posts: results
 			})
-		)
+		).catch(error => console.error(error))
 	}
 
 	handleClick = event => {
@@ -54,13 +54,21 @@ export default class Main extends Component {
 		})
 	}
 
-	handleDeletePost = postIdx => {
-		// We cannot mutate state directly
-		const newStateArray = this.state.posts.filter(
-			(elem, idx) => idx !== postIdx
-		)
+	handleDeletePost = async id => {
+		if (this.state.posts.filter((elem => id === elem.id)) === []) {
+			throw new Error ('Wrong item')
+		}
+		// First we delete the post from the database
+		await deletePost(id).then(results => console.log(results)).catch(error => console.error(error))
+		
+		// Then we get the new, updated list of posts from the database and apply it to state
 
-		this.setState({ posts: newStateArray })
+		await getPosts().then(results =>
+			this.setState({
+				posts: results
+			})
+		).catch(error => console.error(error))
+
 	}
 
 	render() {
@@ -74,7 +82,7 @@ export default class Main extends Component {
 					key={index}
 					{...post}
 					handleDeletePost={this.handleDeletePost}
-					index={index}
+					postId={post._id}
 				/>
 			)
 		})
@@ -105,5 +113,18 @@ async function getPosts() {
 		return await data
 	} catch (error) {
 		console.log(error)
+	}
+}
+
+async function deletePost(id) {
+	const options = {
+		method: 'DELETE'
+	}
+	try {
+		const deletedPost = await fetch(`http://localhost:8000/api/post/${id}`, options)
+		const response = deletedPost.json()
+		return response
+	} catch (error) {
+		console.error(error)
 	}
 }
