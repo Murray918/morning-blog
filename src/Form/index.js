@@ -1,53 +1,32 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export default class Form extends Component {
-	state = {
-		title: '',
-		author: '',
-		post: ''
-	}
-	
-	handleChange = event => {
-        this.setState({
-            [event.currentTarget.name]: event.currentTarget.value
-		})
-    }
-    
-    handleSubmit = event => {
-        console.log(' form index.js line 18 this event fired')
-        event.preventDefault()
-		this.props.handleAddPost(this.state)
-		this.setState({
-			title: '',
-			author: '',
-			post: ''
-		});
-    } 
-
-	render() {
+const Form = ({ handleAddPost }) => {
 		/** * TODO : form goes here and we need the following inputs
 		 * title author and post
 		 */
+		[...inputs, handleSubmit, handleChange ] = useForm({title : '', author : '', post : ''}, handleAddPost)
+
+		
 		return (
-			<form onSubmit={this.handleSubmit}>
+			<form onSubmit={handleSubmit}>
 				<div className="row">
 					<div className="six columns">
 					<label>Title</label>
 					<input
 						className="u-full-width"
-						onChange={this.handleChange}
+						onChange={handleChange}
 						name="title"
-						value={this.state.title}
+						value={title}
 					/>
 					</div>
 					<div className="six columns">
 					<label>Author</label>
 					<input
 						className="u-full-width"
-						onChange={this.handleChange}
+						onChange={handleChange}
 						name="author"
-						value={this.state.author}
+						value={author}
 					/>
 					</div>
 				</div>
@@ -55,16 +34,16 @@ export default class Form extends Component {
                     <label>Post</label>
                     <textarea
 						className="u-full-width"
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                         name="post"
-                        value={this.state.post}
+                        value={post}
                     ></textarea>
                 </div>
 				<input type="submit"  />
 			</form>
 		)
 	}
-}
+
 
 Form.propTypes = {
 	handleAddPost : PropTypes.func
