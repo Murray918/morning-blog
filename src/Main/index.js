@@ -6,6 +6,7 @@ import Button from '../Button'
 export default () => {
 	const [isPosting, setIsPosting] = useState(false)
 	const [posts, setPosts] = useState([])
+	
 
 	useEffect(() => {
 		getPosts().then(result =>
@@ -35,18 +36,16 @@ export default () => {
 
 	const handleDeletePost = postIdx => {
 		// We cannot mutate state directly
-		const newStateArray = posts.filter((elem, idx) => idx !== postIdx)
-
-		setPosts(newStateArray)
+		console.log(postIdx)
 	}
 
-	const postsList = posts.map((post, index) => {
+	const postsList = posts.map(post => {
 		return (
 			<BlogPost
-				key={index}
+				key={post._id}
 				{...post}
 				handleDeletePost={handleDeletePost}
-				index={'party'}
+				index={post._id}
 			/>
 		)
 	})
@@ -83,6 +82,26 @@ async function createPost(options) {
 		const sendPost = await fetch('http://localhost:8000/api/post', options)
 		const postResult = await sendPost.json()
 		return await postResult
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+async function deletePost(id, options) {
+	try {
+		const sendDelete = await fetch(`http://localhost:8000/api/${id}`, options)
+		const deleteResult = await sendDelete.json()
+		return await deleteResult
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+async function editPost(id, options) {
+	try {
+		const sendEdits = fetch(`http://localhost:8000/api/${id}`, options)
+		const editResults = await sendEdits.json()
+		return await editResults
 	} catch (error) {
 		console.error(error)
 	}
