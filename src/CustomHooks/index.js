@@ -1,5 +1,3 @@
-import { useForm } from './CustomFormHook'
+import useForm from './CustomFormHook'
 
-export default {
-    useForm
-}
+export { useForm }
