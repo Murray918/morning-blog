@@ -4,16 +4,18 @@ import BlogPost from '../BlogPost'
 import Button from '../Button'
 
 export default () => {
-
 	const [isPosting, setIsPosting] = useState(false)
 	const [posts, setPosts] = useState([])
 
-	useEffect(() => getPosts().then(result => setPosts(result)), [posts])
+	useEffect(() => {
+		getPosts().then(result =>
+			setPosts(result.sort((a, b) => a.createdAt < b.createdAt))
+		)
+	}, [isPosting])
 
 	const handleClick = event => {
 		setIsPosting(!isPosting)
 	}
-
 
 	const handleAddPost = async ({ title, author, post }) => {
 		const options = {
@@ -24,9 +26,7 @@ export default () => {
 			body: JSON.stringify({ title, author, post })
 		}
 		try {
-			const response = await createPost(options)
-			const result = await response.json()
-			await setPosts([{ ...result }, ...this.state.posts])
+			await createPost(options)
 			await setIsPosting(!isPosting)
 		} catch (error) {
 			console.error(error)
@@ -35,9 +35,7 @@ export default () => {
 
 	const handleDeletePost = postIdx => {
 		// We cannot mutate state directly
-		const newStateArray = this.state.posts.filter(
-			(elem, idx) => idx !== postIdx
-		)
+		const newStateArray = posts.filter((elem, idx) => idx !== postIdx)
 
 		setPosts(newStateArray)
 	}
@@ -73,9 +71,10 @@ async function getPosts() {
 	try {
 		const fetchPosts = await fetch('http://localhost:8000/api/posts')
 		const data = fetchPosts.json()
+		console.log(await data)
 		return await data
 	} catch (error) {
-		console.log(error)
+		console.error(error)
 	}
 }
 
@@ -85,6 +84,6 @@ async function createPost(options) {
 		const postResult = await sendPost.json()
 		return await postResult
 	} catch (error) {
-		console.log('line 39', error)
+		console.error(error)
 	}
 }
