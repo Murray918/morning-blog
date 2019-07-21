@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Form from '../Form'
+import { NewPostForm } from '../Forms'
 import { getPosts, createPost, editPost, deletePost } from '../Services'
 import BlogPost from '../BlogPost'
 import Button from '../Button'
@@ -36,6 +36,7 @@ export default () => {
 	 *******************************************************************************************************************/
 	useEffect(() => {
 		getPosts().then(result =>
+			// we can use the sort method to put our posts in the right order
 			setPosts(result.sort((a, b) => a.createdAt < b.createdAt))
 		)
 	}, [])
@@ -92,7 +93,7 @@ export default () => {
 			</header>
 			<section>
 				<Button handleClick={handleClick} type={'Add New Post'} />
-				{!!isPosting ? <Form handleAddPost={handleAddPost} /> : null}
+				{!!isPosting ? <NewPostForm handleAddPost={handleAddPost} /> : null}
 				<ul>{postsList}</ul>
 			</section>
 		</div>

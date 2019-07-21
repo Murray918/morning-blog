@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useForm } from '../CustomHooks'
 
-const Form = ({ handleAddPost }) => {
+const NewPostForm = ({ handleAddPost }) => {
 	/** * TODO : form goes here and we need the following inputs
 	 * title author and post
 	 */
@@ -47,8 +47,8 @@ const Form = ({ handleAddPost }) => {
 	)
 }
 
-export default Form
+export default NewPostForm
 
-Form.propTypes = {
+NewPostForm.propTypes = {
 	handleAddPost: PropTypes.func
 }
