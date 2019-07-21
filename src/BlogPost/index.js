@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Button from '../Button'
+import { EditForm } from '../Forms'
 import PropTypes from 'prop-types'
 
 function BlogPost({
@@ -12,9 +13,24 @@ function BlogPost({
 }) {
 	const [isEditing, setIsEditing] = useState(false)
 
-	const hanelEditingToggle = () => {
+	const handleEditToggle = () => {
+		console.log('toggle clicked')
 		setIsEditing(!isEditing)
 	}
+	if (!!isEditing)
+		return (
+			<li>
+				{' '}
+				<EditForm
+					post={post}
+					author={author}
+					index={index}
+					title={title}
+					handleEditPost={handleEditPost}
+					handleEditToggle={handleEditToggle}
+				/>
+			</li>
+		)
 	return (
 		<li>
 			<h3>{title}</h3>
@@ -26,7 +42,11 @@ function BlogPost({
 					index={index}
 					handleDeletePost={handleDeletePost}
 				/>
-				<Button type={'Edit'} index={index} handleEditPost={handleEditPost} />
+				<Button
+					type={'Edit'}
+					index={index}
+					handleEditToggle={handleEditToggle}
+				/>
 			</div>
 		</li>
 	)
