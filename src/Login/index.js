@@ -3,8 +3,8 @@ import Button from '../Button'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
-function Login({ handleLogin, isLoggedIn, type, location }) {
-	return !!isLoggedIn ? (
+function Login({ handleLogin, authenticated, type, location }) {
+	return !!authenticated ? (
 		<Redirect to={{ pathname: '/main', state: { from: location } }} />
 	) : (
 		<div>
@@ -18,8 +18,7 @@ export default Login
 
 Login.propTypes = {
 	type: PropTypes.string,
-    handleLogin: PropTypes.func,
-    isLoggedIn : PropTypes.bool,
-    location : PropTypes.string
+	handleLogin: PropTypes.func,
+	authenticated: PropTypes.bool,
+	location: PropTypes.string
 }
-

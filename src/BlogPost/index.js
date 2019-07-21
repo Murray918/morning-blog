@@ -1,18 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '../Button'
 import PropTypes from 'prop-types'
 
-function BlogPost({ title, author, post, index, handleDeletePost }) {
+function BlogPost({
+	title,
+	author,
+	post,
+	index,
+	handleDeletePost,
+	handleEditPost
+}) {
+	const [isEditing, setIsEditing] = useState(false)
+
+	const hanelEditingToggle = () => {
+		setIsEditing(!isEditing)
+	}
 	return (
 		<li>
 			<h3>{title}</h3>
 			<h5>{author}</h5>
 			<h6>{post}</h6>
-			<Button
-				type={'Delete'}
-				index={index}
-				handleDeletePost={handleDeletePost}
-			/>
+			<div>
+				<Button
+					type={'Delete'}
+					index={index}
+					handleDeletePost={handleDeletePost}
+				/>
+				<Button type={'Edit'} index={index} handleEditPost={handleEditPost} />
+			</div>
 		</li>
 	)
 }
@@ -24,5 +39,6 @@ BlogPost.propTypes = {
 	author: PropTypes.string,
 	post: PropTypes.string,
 	index: PropTypes.string,
-	handleDeletePost: PropTypes.func
+	handleDeletePost: PropTypes.func,
+	handleEditPost: PropTypes.func
 }

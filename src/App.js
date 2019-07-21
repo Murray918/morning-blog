@@ -8,7 +8,8 @@ import ProtectedRoute from './Login/ProtectedRoute'
 export default () => {
 	const [authenticated, setAuthenticated] = useState(false)
 
-	const handleLogin = () => {
+	const handleLogin = event => {
+		console.log('login clicked')
 		setAuthenticated(!authenticated)
 	}
 	return (
